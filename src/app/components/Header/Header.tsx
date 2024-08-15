@@ -2,29 +2,31 @@ import { headers } from 'next/headers'
 import React from 'react'
 import Link from 'next/link'
 import { GrTechnology } from "react-icons/gr";
+import styles from './Header.module.css';
 
 const Header = () => {
     return (
-        <header>
-            <nav>
+        <header className={styles.header}>
+            <nav className={styles.navbar}>
                 <div>
-                    <Link href="/">
+                    <Link href="/" className={styles.logo}>
                         CLOUD
                             <GrTechnology />
                         HOSTING
                     </Link>
                 </div>
 
-                <ul>
-                    <Link href="/about">about</Link>
-                    <Link href="/admin">admin</Link>
-                    <Link href="/">home</Link>
+                <ul className={styles.links}>
+                    <Link href="/about" className={styles.link}>Home</Link>
+                    <Link href="/admin" className={styles.link}>About</Link>
+                    <Link href="/" className={styles.link}>Articale</Link>
+                    <Link href="/" className={styles.link}>Admin Dashboard</Link>
                 </ul>
             </nav>
 
-            <div>
-                <Link href="./login">log in</Link>
-                <Link href="./register">register</Link>
+            <div className={styles.right}>
+                <Link href="./login" className={styles.btn}>log in</Link>
+                <Link href="./register" className={styles.btn}>register</Link>
             </div>
         </header>
     )

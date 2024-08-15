@@ -1,0 +1,35 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 40px;
+    border-bottom: 4px solid rgb(144,144,144);
+    background-color: rgb(227,225,225);
+    position: relative;
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+    font-size: 25px;
+    font-weight: bold;
+    color: rgb(176,15,176);
+}
+
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.links{
+    margin-left: 30px;
+}
+
+.link{
+    font-size: 20px;
+    color: blue;
+    margin: 0 20px;
+    font-weight: bold;
+    text-transform: capitalize;
+}
