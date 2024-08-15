@@ -1,6 +1,11 @@
+import Header from "./components/Header/Header"
+
 const HomePage = () => {
   return (
-    <div>Home Page</div>
+    <div>
+      <Header/>
+      <h1> Home Page</h1>
+    </div>
   )
 }
 
