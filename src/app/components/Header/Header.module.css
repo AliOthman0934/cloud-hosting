@@ -33,3 +33,29 @@
     font-weight: bold;
     text-transform: capitalize;
 }
+
+.link:hover{
+    color: darkblue;
+
+}
+
+.right{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn{
+    font-size: 20px;
+    font-weight: bold;
+    background-color: blue;
+    color: white;
+    padding: 10px 10px ;
+    border-radius: 10px;
+    text-transform: capitalize;
+}
+
+.btn:hover{
+    background-color: darkblue;
+}
+
