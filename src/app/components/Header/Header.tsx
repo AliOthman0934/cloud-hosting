@@ -17,10 +17,10 @@ const Header = () => {
                 </div>
 
                 <ul className={styles.links}>
-                    <Link href="/about" className={styles.link}>Home</Link>
-                    <Link href="/admin" className={styles.link}>About</Link>
-                    <Link href="/" className={styles.link}>Articale</Link>
-                    <Link href="/" className={styles.link}>Admin Dashboard</Link>
+                    <Link href="/" className={styles.link}>Home</Link>
+                    <Link href="/about" className={styles.link}>About</Link>
+                    <Link href="/articale" className={styles.link}>Articale</Link>
+                    <Link href="/admin" className={styles.link}>Admin Dashboard</Link>
                 </ul>
             </nav>
 
