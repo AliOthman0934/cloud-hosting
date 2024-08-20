@@ -1,61 +1,106 @@
-.header{
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 40px 40px;
-    border-bottom: 4px solid rgb(144,144,144);
-    background-color: rgb(227,225,225);
+    border-bottom: 4px solid rgb(144, 144, 144);
+    background-color: rgb(227, 225, 225);
     position: relative;
 }
 
-.logo{
+.logo {
     display: flex;
     align-items: center;
     font-size: 25px;
     font-weight: bold;
-    color: rgb(176,15,176);
+    color: rgb(176, 15, 176);
 }
 
-.navbar{
+.menu {
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #252121;
+    display: none;
+}
+
+.navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.links{
+
+.links {
     margin-left: 30px;
 }
 
-.link{
+.link {
     font-size: 20px;
-    color: blue;
+    color: black;
     margin: 0 20px;
     font-weight: bold;
     text-transform: capitalize;
 }
 
-.link:hover{
+.link:hover {
     color: darkblue;
 
 }
 
-.right{
+.right {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.btn{
+.btn {
     font-size: 20px;
     font-weight: bold;
     background-color: blue;
     color: white;
-    padding: 5px 10px ;
+    padding: 5px 10px;
     border-radius: 10px;
     text-transform: capitalize;
 }
 
-.btn:hover{
+.btn:hover {
     background-color: darkblue;
 }
 
+@media(max-width: 1080px) {
+    .logo {
+        display: none;
+    }
+
+    .menu {
+        display: block;
+    }
+
+    .navLinksWrapper {
+        position: absolute;
+        top: 100%;
+        width: 100%;
+        left: 0;
+        background-color: rgb(227,225,225);
+        z-index: 100;
+        transition: all 0.5s ease-in;
+        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    }
+
+    .links{
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-direction: column;
+        padding-left: 30px;
+        padding-bottom: 10px;
+
+    }
+
+    .link{
+        padding: 0%;
+        margin: 12px 0;
+
+    }
+}
