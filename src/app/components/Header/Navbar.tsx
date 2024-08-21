@@ -34,7 +34,7 @@ const Navbar = () => {
                 <ul className={styles.links}>
                     <Link href="/" className={styles.link} onClick={()=> setToggel(false)}>Home</Link>
                     <Link href="/about" className={styles.link} onClick={()=> setToggel(false)}>About</Link>
-                    <Link href="/articale" className={styles.link} onClick={()=> setToggel(false)}>Articale</Link>
+                    <Link href="/article" className={styles.link} onClick={()=> setToggel(false)}>Articale</Link>
                     <Link href="/admin" className={styles.link} onClick={()=> setToggel(false)}>Admin Dashboard</Link>
                 </ul>
             </div>
