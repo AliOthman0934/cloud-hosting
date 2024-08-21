@@ -1,8 +1,18 @@
-import React from 'react'
+type articales = {
+    id : number,
+    userId: number,
+    title: string,
+    body: string
+}
 
-const Articalepage = () => {
+const Articalepage = async () => {
+    const getArticales = await fetch("https://jsonplaceholder.typicode.com/posts");
+    const articles: articales[] = await getArticales.json();
     return (
-        <div>Articale page</div>
+        <section>
+                {articles.map(item => <h1 key={item.id}>{item.title}</h1> )}
+        </section>
+        
     )
 }
 
