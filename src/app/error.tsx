@@ -7,7 +7,7 @@ interface ErrorPageProps{
 
 const error = ({error , reset}:ErrorPageProps) => {
     return (
-        <div className="pt-7 text-center m-auto" >
+        <div className="pt-7 text-center grid place-content-center" >
             <div className="text-3xl text-red-600 font-semibold">
                 <p>Somthin went wrong </p>
             </div>
