@@ -5,7 +5,7 @@ import { error } from "console";
 
 
 const Articlepage = async () => {
-    const getArticles = await fetch("https://jsonplaceholder.typicode.com/posts");
+    const getArticles = await fetch("https://jsonplaceholder.typicode.com/postsaa");
 
     if(!getArticles.ok){
         throw new Error("Somthing went wrong try agin")
