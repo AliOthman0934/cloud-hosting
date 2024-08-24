@@ -1,3 +1,5 @@
+import {typeArticles} from "@/utils/types"
+
 interface singleArticle{
     params: {id: string}
 }
@@ -7,9 +9,15 @@ const singleArticlePage = async ({params}:singleArticle) => {
     if(!response.ok){
         throw new Error("Error fetching single article")
     }
-    const singleArticle = response.json();
+    const singleArticle: typeArticles = await response.json();
     return (
-        <div>single Article Page</div>
+        <section className="fix-height container m-auto w-full px-5 pt-8 md:w-3/4">
+            <div className="bg-white p-7 rounded-lg">
+                <h1 className=" text-3xl font-bold text-gray-700 mb-2">{singleArticle.title}</h1>
+                <div className="text-gray-400">1/1/2024</div>
+                <p className="text-gray-800 text-xl mt-5">{singleArticle.body}</p>
+            </div>
+        </section>
     )
 }
 
