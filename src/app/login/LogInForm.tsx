@@ -1,13 +1,27 @@
 "use client"
-import React, {useState} from "react"
+import React, { ReactEventHandler, useState } from "react"
 
 const LogInForm = () => {
-    const [email , setEmail] = useState();
-    const [password , setPassword] = useState();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const submitFormHandler = (e:React.FormEvent) => {
+        e.preventDefault();
+        console.log({email,password})
+    }
     return (
-        <form className='flex flex-col'>
-            <input type='email' placeholder='Inter Your Email' className='mb-4 border rounded p-2 text-xl' />
-            <input type='password' placeholder='Inter Your Password' className='mb-2 border rounded p-2 text-xl' />
+        <form className='flex flex-col' onSubmit={submitFormHandler}>
+            <input
+                type='email'
+                placeholder='Inter Your Email'
+                value={email}
+                onChange={(e)=> setEmail(e.target.value)}
+                className='mb-4 border rounded p-2 text-xl' />
+            <input
+                type='password'
+                placeholder='Inter Your Password'
+                value={password}
+                onChange={(e)=> setPassword(e.target.value)}
+                className='mb-2 border rounded p-2 text-xl' />
             <button type='submit' className='text-2xl text-white bg-blue-800 p-2 rounded-lg font-bold'>Login</button>
         </form>
     )
