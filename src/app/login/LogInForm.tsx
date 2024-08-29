@@ -1,12 +1,19 @@
 "use client"
 import React, { ReactEventHandler, useState } from "react"
+import { toast } from "react-toastify";
 
 const LogInForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const submitFormHandler = (e:React.FormEvent) => {
         e.preventDefault();
-        console.log({email,password})
+        if(email === ""){
+            return toast.error("Email Is Required")
+        }
+        
+        if(password === ""){
+            return toast.error("Password Is Required")
+        }
     }
     return (
         <form className='flex flex-col' onSubmit={submitFormHandler}>
