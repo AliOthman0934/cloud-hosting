@@ -3,6 +3,7 @@ import Article from "../components/Article/Article";
 import {typeArticles} from "@/utils/types"
 import { error } from "console";
 import SearchArticle from "../components/Article/SearchArticle";
+import Pagination from "../components/Article/pagination";
 
 
 const Articlepage = async () => {
@@ -20,7 +21,7 @@ const Articlepage = async () => {
                     <Article article={item} key={item.id}/>
                 )}
             </div>
-
+            <Pagination/>
         </section>
 
     )
