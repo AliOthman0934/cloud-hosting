@@ -16,7 +16,7 @@ const Articlepage = async () => {
         <section className="container m-auto px-5">
             <SearchArticle/>
             <div className="flex justify-center items-center flex-wrap gap-7">
-                {articles.map(item =>
+                {articles.slice(0,6).map(item =>
                     <Article article={item} key={item.id}/>
                 )}
             </div>
