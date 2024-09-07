@@ -1,4 +1,4 @@
- export type typeArticles = {
+export type typeArticles = {
     id: number,
     userId: number,
     title: string,
