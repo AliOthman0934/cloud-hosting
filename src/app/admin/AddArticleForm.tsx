@@ -16,7 +16,7 @@ const AddArticleForm = () => {
         }
     }
     return (
-        <form className='flex flex-col' onSubmit={submitFormHandler}>
+        <form className='flex flex-col ' onSubmit={submitFormHandler}>
             <input
                 type='text'
                 placeholder='Inter Title'
