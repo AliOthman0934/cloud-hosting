@@ -11,7 +11,7 @@ const AddCommentForm = () => {
         }
     }
     return (
-        <form onSubmit={submitFormHandler}>
+        <form onSubmit={submitFormHandler} className="mb-7">
             <input
                 type='text'
                 placeholder='Add A comment'

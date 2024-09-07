@@ -1,5 +1,6 @@
 import AddArticleForm from "@/app/admin/AddArticleForm"
 import AddCommentForm from "@/app/components/Comment/AddCommentForm"
+import CommentItem from "@/app/components/Comment/CommentItem"
 import {typeArticles} from "@/utils/types"
 
 interface singleArticle{
@@ -20,6 +21,10 @@ const singleArticlePage = async ({params}:singleArticle) => {
                 <p className="text-gray-800 text-xl mt-5">{singleArticle.body}</p>
             </div>
             <AddCommentForm/>
+            <h4 className="text-xl text-gray-800 ps-1 font-semibold mb-2 mt-7">
+                Commemt
+            </h4>
+            <CommentItem/>
         </section>
     )
 }
