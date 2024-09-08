@@ -2,6 +2,8 @@ import AddArticleForm from "@/app/admin/AddArticleForm"
 import AddCommentForm from "@/app/components/Comment/AddCommentForm"
 import CommentItem from "@/app/components/Comment/CommentItem"
 import {typeArticles} from "@/utils/types"
+import { promises } from "dns"
+import { resolve } from "path"
 
 interface singleArticle{
     params: {id: string}
