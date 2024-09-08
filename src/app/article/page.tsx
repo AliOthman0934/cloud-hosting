@@ -3,9 +3,11 @@ import Article from "../components/Article/Article";
 import { typeArticles } from "@/utils/types"
 import SearchArticle from "../components/Article/SearchArticle";
 import Pagination from "../components/Article/pagination";
+import { resolve } from "dns/promises";
 
 
 const Articlepage = async () => {
+    await new Promise((resolve) => setTimeout(resolve, 3000));
     const getArticles = await fetch("https://jsonplaceholder.typicode.com/posts");
 
     if (!getArticles.ok) {
