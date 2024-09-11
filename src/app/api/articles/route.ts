@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import { string, z } from "zod";
 import { articlesData } from "../../../utils/data"
 import { typeArticles } from "@/utils/types";
+import { newArticleSchema } from "@/utils/validation"
+import { createArticle } from "@/utils/postType"
+import { title } from "process";
+import { error } from "console";
 
 
 /**
@@ -33,14 +38,12 @@ export function GET(request: NextRequest) {
  */
 
 
-interface createArticle {
-    body: string,
-    title: string
-}
-
 export async function POST(request: NextRequest) {
     const body = await (request.json()) as createArticle;
-    console.log(body);
+    const validation = newArticleSchema.safeParse(body);
+    if (!validation.success) {
+        return NextResponse.json({ message: validation.error.errors[0].message }, { status: 400 })
+    }
     const newArticle: typeArticles = {
         title: body.title,
         body: body.body,
