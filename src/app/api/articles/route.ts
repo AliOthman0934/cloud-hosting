@@ -19,6 +19,20 @@ export function GET(request: NextRequest) {
 }
 
 
+
+/**
+ * @method POST 
+ * @route http://localhost:3000/api/articles
+ * @access public
+ * @description 
+ *   Add POST handler to create a new article:
+        - Implemented POST method to accept JSON data and create a new article.
+        - Defined `createArticle` interface to validate incoming request body.
+        - Created new article with auto-incremented `id` and default `userId`.
+        - Appended new article to `articlesData` and returned a 201 response with the new article.
+ */
+
+
 interface createArticle {
     body: string,
     title: string
