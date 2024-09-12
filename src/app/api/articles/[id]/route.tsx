@@ -1,6 +1,19 @@
 import { NextRequest,NextResponse } from "next/server";
 import {articlesData} from "@/utils/data"
 
+
+
+/**
+ * @method GET 
+ * @route http://localhost:3000/api/articles/:id
+ * @access public
+ * @description 
+ *  - Created GET handler for fetching single article data using Next.js API routes.
+    - Utilized `NextRequest` and `NextResponse` from "next/server" to return the data.
+    - Added a status code of 200 for successful responses.
+    - Imported articles data from the utils/data file for the response.
+ */
+
 interface articleId{
     params: {id:string}
 }
