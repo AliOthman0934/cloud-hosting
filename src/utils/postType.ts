@@ -1,9 +1,9 @@
 export interface createArticle {
-    body: string,
+    description: string,
     title: string
 }
 
 export interface updateArticle {
-    body?: string,
+    description?: string,
     title?: string
 }
