@@ -4,8 +4,11 @@ import { articlesData } from "../../../utils/data"
 import { typeArticles } from "@/utils/types";
 import { newArticleSchema } from "@/utils/validation"
 import { createArticle } from "@/utils/postType"
+import prisma from "@/utils/db"
 import { title } from "process";
 import { error } from "console";
+
+
 
 
 /**
@@ -19,8 +22,14 @@ import { error } from "console";
     - Imported articles data from the utils/data file for the response.
  */
 
-export function GET(request: NextRequest) {
-    return NextResponse.json(articlesData, { status: 200 })
+export async function GET(request: NextRequest) {
+    try {
+        const getArticle = await prisma.article.findMany();
+        return NextResponse.json(getArticle, { status: 200 })
+    } catch (error) {
+        console.error("Error fetching articles:", error); // Log the actual error
+        return NextResponse.json({ message: "Internal server error" }, { status: 500 });
+    }
 }
 
 
@@ -39,17 +48,22 @@ export function GET(request: NextRequest) {
 
 
 export async function POST(request: NextRequest) {
-    const body = await (request.json()) as createArticle;
-    const validation = newArticleSchema.safeParse(body);
-    if (!validation.success) {
-        return NextResponse.json({ message: validation.error.errors[0].message }, { status: 400 })
+    try {
+        const body = await (request.json()) as createArticle;
+        const validation = newArticleSchema.safeParse(body);
+        if (!validation.success) {
+            return NextResponse.json({ message: validation.error.errors[0].message }, { status: 400 })
+        }
+        const newArticle = await prisma.article.create({
+            data:{
+                title: body.title,
+                description : body.description
+
+            }
+        })
+        return NextResponse.json(newArticle, { status: 201 })
+    } catch (error) {
+        console.error("Error creating article:", error); // Log the actual error
+        return NextResponse.json({ message: "Internal server error" }, { status: 500 });
     }
-    const newArticle: typeArticles = {
-        title: body.title,
-        body: body.body,
-        id: articlesData.length + 1,
-        userId: 202
-    }
-    articlesData.push(newArticle)
-    return NextResponse.json(newArticle, { status: 201 })
 }
