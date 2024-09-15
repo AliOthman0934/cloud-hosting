@@ -87,10 +87,15 @@ interface articleId {
 }
 
 export async function DELETE(request: NextRequest, { params }: articleId) {
-    const singleArticle = await prisma.article.findUnique({ where: { id: parseInt(params.id) } });
-    if (!singleArticle) {
-        return NextResponse.json({ message: "Article Not Found" }, { status: 404 })
+    try {
+        const singleArticle = await prisma.article.findUnique({ where: { id: parseInt(params.id) } });
+        if (!singleArticle) {
+            return NextResponse.json({ message: "Article Not Found" }, { status: 404 })
+        }
+        await prisma.article.delete({ where: { id: parseInt(params.id) } })
+        return NextResponse.json({ message: "Article deleted" }, { status: 200 });
+    } catch (error) {
+        console.error("Error deleting article:", error); // Log the actual error
+        return NextResponse.json({ message: "Internal server error" }, { status: 500 });
     }
-    await prisma.article.delete({ where: { id: parseInt(params.id) } })
-    return NextResponse.json({ message: "Article deleted" }, { status: 200 });
 }
