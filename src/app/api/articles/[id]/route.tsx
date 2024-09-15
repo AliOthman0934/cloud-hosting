@@ -22,11 +22,11 @@ interface articleId {
 
 export async function GET(request: NextRequest, { params }: articleId) {
     try {
-        const singleArticle = prisma.article.findUnique({where:{id:parseInt(params.id)}})
-        if(!singleArticle){
-            return NextResponse.json({message:"Article Not Found"},{status:404})
+        const singleArticle = prisma.article.findUnique({ where: { id: parseInt(params.id) } })
+        if (!singleArticle) {
+            return NextResponse.json({ message: "Article Not Found" }, { status: 404 })
         }
-        return NextResponse.json({singleArticle},{status:200});
+        return NextResponse.json({ singleArticle }, { status: 200 });
     } catch (error) {
         console.error("Error fetching article:", error); // Log the actual error
         return NextResponse.json({ message: "Internal server error" }, { status: 500 });
@@ -50,13 +50,24 @@ interface articleId {
 }
 
 export async function PUT(request: NextRequest, { params }: articleId) {
-    const singleArticle = articlesData.find(a => a.id === parseInt(params.id));
-    if (!singleArticle) {
-        return NextResponse.json({ message: "Article Not Found" }, { status: 404 })
+    try {
+        const singleArticle = prisma.article.findUnique({ where: { id: parseInt(params.id) } });
+        if (!singleArticle) {
+            return NextResponse.json({ message: "Article Not Found" }, { status: 404 })
+        }
+        const body = (await request.json()) as updateArticle;
+        const updatedArticle = await prisma.article.update({
+            where: { id: parseInt(params.id) },
+            data: {
+                title: body.title,
+                description: body.description,
+            },
+        });
+        return NextResponse.json({ updatedArticle }, { status: 200 });
+    } catch (error) {
+        console.error("Error updating article:", error); // Log the actual error
+        return NextResponse.json({ message: "Internal server error" }, { status: 500 });
     }
-    const body = (await request.json()) as updateArticle;
-    console.log(body)
-    return NextResponse.json({ message: "Article updated" }, { status: 200 });
 }
 
 
@@ -76,9 +87,10 @@ interface articleId {
 }
 
 export async function DELETE(request: NextRequest, { params }: articleId) {
-    const singleArticle = articlesData.find(a => a.id === parseInt(params.id));
+    const singleArticle = await prisma.article.findUnique({ where: { id: parseInt(params.id) } });
     if (!singleArticle) {
         return NextResponse.json({ message: "Article Not Found" }, { status: 404 })
     }
+    await prisma.article.delete({ where: { id: parseInt(params.id) } })
     return NextResponse.json({ message: "Article deleted" }, { status: 200 });
 }
