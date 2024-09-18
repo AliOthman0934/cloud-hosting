@@ -2,6 +2,7 @@ import prisma from "@/utils/db";
 import { newUser } from "@/utils/postType";
 import { newUserSchema } from "@/utils/validation";
 import { NextRequest, NextResponse } from "next/server";
+import bcrypt from "bcryptjs"
 
 
 /**
@@ -33,20 +34,29 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ message: "This Accout Is Already Used" }, { status: 400 })
         }
 
+        const sult = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(body.password , sult) 
+
         const newUser = await prisma.user.create({
             data: {
                 userName: body.userName,
-                email: body.password,
-                password: body.password,
+                email: body.email,
+                password: hashedPassword,
                 isAdmin: false
+            },
+            select:{
+                userName:true,
+                email:true,
+                isAdmin:true
+            
             }
         });
 
-        console.log(request);
+        const token = null
 
-        return NextResponse.json({ newUser }, { status: 200 })
+        return NextResponse.json({ ...newUser ,token }, { status: 200 })
     } catch (error) {
-        console.error("Error Singing In try later:", error); // Log the actual error
+        console.error("Error Signing In.Try again later:", error); // Log the actual error
         return NextResponse.json({ message: "Internal server error" }, { status: 500 });
     }
 }
