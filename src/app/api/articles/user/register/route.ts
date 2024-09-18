@@ -1,6 +1,6 @@
-import prisma from "@/utils/db";
-import { newUser } from "@/utils/postType";
-import { newUserSchema } from "@/utils/validation";
+import prisma from "../../../../../utils/db";
+import { newUser } from "../../../../../utils/postType";
+import {newUserSchema} from "../../../../../utils/validation"
 import { NextRequest, NextResponse } from "next/server";
 
 
@@ -41,6 +41,8 @@ export async function POST(request: NextRequest) {
                 isAdmin: false
             }
         });
+
+        console.log(request);
 
         return NextResponse.json({ newUser }, { status: 200 })
     } catch (error) {
