@@ -13,3 +13,8 @@ export interface newUser{
     email: string,
     password: string
 }
+
+export interface logInUser{
+    email : string,
+    password : string
+}
