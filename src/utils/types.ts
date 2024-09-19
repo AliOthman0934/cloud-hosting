@@ -4,3 +4,9 @@ export type typeArticles = {
     title: string,
     body: string
 }
+
+export type typeJwt = {
+    id : number,
+    userName :string,
+    isAdmin : boolean
+}

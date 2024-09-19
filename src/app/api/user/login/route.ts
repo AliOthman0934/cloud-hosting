@@ -3,6 +3,9 @@ import { NextRequest, NextResponse } from "next/server"
 import { logInUserSchema } from "../../../../utils/validation"
 import bcrypt from "bcryptjs"
 import prisma from "@/utils/db";
+import {jwt} from "@/utils/jwt"
+import { JwtPayload } from "jsonwebtoken";
+import { typeJwt } from "@/utils/types";
 
 export async function POST(request: NextRequest) {
     try {
@@ -21,7 +24,15 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ message: "Invalid Password" }, { status: 400 })
         }
 
-        return NextResponse.json({ message: "Authenticated User" }, { status: 200 })
+        const payload:typeJwt = {
+            id :usre.id,
+            userName : usre.userName,
+            isAdmin : usre.isAdmin
+        }
+
+        const token = jwt(payload)
+
+        return NextResponse.json({ message: "Authenticated User",token }, { status: 200 })
 
     } catch (error) {
         console.error("Error loging In.Try again later:", error); // Log the actual error
