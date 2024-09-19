@@ -3,6 +3,9 @@ import { newUser } from "@/utils/postType";
 import { newUserSchema } from "@/utils/validation";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs"
+import {jwt} from "@/utils/jwt"
+import { JwtPayload } from "jsonwebtoken";
+import { typeJwt } from "@/utils/types";
 
 
 /**
@@ -47,12 +50,19 @@ export async function POST(request: NextRequest) {
             select:{
                 userName:true,
                 email:true,
-                isAdmin:true
+                isAdmin:true,
+                id: true
             
             }
         });
 
-        const token = null
+        const payload:typeJwt = {
+            id :newUser.id,
+            userName : newUser.userName,
+            isAdmin : newUser.isAdmin
+        }
+
+        const token = jwt(payload)
 
         return NextResponse.json({ ...newUser ,token }, { status: 200 })
     } catch (error) {
