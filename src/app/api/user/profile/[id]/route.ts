@@ -4,6 +4,20 @@ import prisma from "@/utils/db";
 import jsonwebtoken from 'jsonwebtoken';
 import { typeJwt } from "@/utils/types"
 
+/**
+ * @method DELETE
+ * @route http://localhost:3000/api/profile:id
+ * @access private
+ * @description 
+ *  - Implemented DELETE request to remove a user account by ID.
+    - Added validation to check if the user account exists before attempting deletion.
+    - Handled errors and return appropriate status codes (404 for not found, 200 for successful deletion, 500 for internal errors).
+    - Implemented JWT authentication to verify that the user is authorized to delete their own account.
+    - Added a check to ensure the auth token is provided in the request headers.
+    - Used `jsonwebtoken.verify()` to decode the token and compare the user ID with the account to be deleted.
+    - Added proper error handling for missing or invalid tokens and unauthorized actions.
+ */
+
 interface props {
     params: { id: string }
 }
