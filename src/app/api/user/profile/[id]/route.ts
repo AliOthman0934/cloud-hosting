@@ -29,11 +29,7 @@ export async function DELETE(request: NextRequest, { params }: props) {
             return NextResponse.json({ message: "User Not Found" }, { status: 404 })
         }
 
-        const authToken = request.headers.get("authToken")
-        if (!authToken) {
-            return NextResponse.json({ message: "No Token Provided" }, { status: 401 })
-        }
-
+        const authToken = request.headers.get("authToken") as string
         const authTokenFromTheUser = jsonwebtoken.verify(authToken, process.env.JWT_KEY as string) as typeJwt
         if (authTokenFromTheUser.id === userAccount.id) {
             await prisma.user.delete({ where: { id: parseInt(params.id) } })
