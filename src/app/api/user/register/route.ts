@@ -3,7 +3,7 @@ import { newUser } from "@/utils/postType";
 import { newUserSchema } from "@/utils/validation";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs"
-import {jwt} from "@/utils/jwt"
+import {jwt,sitCookie} from "@/utils/jwt"
 import { JwtPayload } from "jsonwebtoken";
 import { typeJwt } from "@/utils/types";
 
@@ -62,9 +62,12 @@ export async function POST(request: NextRequest) {
             isAdmin : newUser.isAdmin
         }
 
-        const token = jwt(payload)
+        // const token = jwt(payload)
+        const cookie = sitCookie(payload)
 
-        return NextResponse.json({ ...newUser ,token }, { status: 200 })
+        return NextResponse.json({ ...newUser }, { status: 200, headers: {
+            "Sit-Cookie" : cookie
+        } })
     } catch (error) {
         console.error("Error Signing In.Try again later:", error); // Log the actual error
         return NextResponse.json({ message: "Internal server error" }, { status: 500 });
