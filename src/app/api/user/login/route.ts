@@ -6,6 +6,7 @@ import prisma from "@/utils/db";
 import {jwt} from "@/utils/jwt"
 import { JwtPayload } from "jsonwebtoken";
 import { typeJwt } from "@/utils/types";
+import {serialize} from "cookie" 
 
 export async function POST(request: NextRequest) {
     try {
@@ -32,7 +33,16 @@ export async function POST(request: NextRequest) {
 
         const token = jwt(payload)
 
-        return NextResponse.json({ message: "Authenticated User",token }, { status: 200 })
+        const cookie = serialize("cookieToken", token,{
+            httpOnly : true,
+            secure : process.env.NODE_ENV === "production",
+            path : "/",
+            maxAge : 30 * 30 * 60 
+        })
+
+        return NextResponse.json({ message: "Authenticated User"}, { status: 200, headers :{
+            "Set-Cookie" : cookie
+        } })
 
     } catch (error) {
         console.error("Error loging In.Try again later:", error); // Log the actual error
