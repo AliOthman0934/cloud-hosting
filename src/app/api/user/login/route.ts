@@ -6,7 +6,8 @@ import prisma from "@/utils/db";
 import {jwt} from "@/utils/jwt"
 import { JwtPayload } from "jsonwebtoken";
 import { typeJwt } from "@/utils/types";
-import {serialize} from "cookie" 
+import {serialize} from "cookie"
+import {sitCookie} from "@/utils/jwt" 
 
 export async function POST(request: NextRequest) {
     try {
@@ -31,14 +32,16 @@ export async function POST(request: NextRequest) {
             isAdmin : usre.isAdmin
         }
 
-        const token = jwt(payload)
+        // const token = jwt(payload)
 
-        const cookie = serialize("cookieToken", token,{
-            httpOnly : true,
-            secure : process.env.NODE_ENV === "production",
-            path : "/",
-            maxAge : 30 * 30 * 60 
-        })
+        // const cookie = serialize("cookieToken", token,{
+        //     httpOnly : true,
+        //     secure : process.env.NODE_ENV === "production",
+        //     path : "/",
+        //     maxAge : 30 * 30 * 60 
+        // })
+
+        const cookie = sitCookie(payload)
 
         return NextResponse.json({ message: "Authenticated User"}, { status: 200, headers :{
             "Set-Cookie" : cookie
