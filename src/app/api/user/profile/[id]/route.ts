@@ -3,6 +3,7 @@ import { Prisma } from "@prisma/client"
 import prisma from "@/utils/db";
 import jsonwebtoken from 'jsonwebtoken';
 import { typeJwt } from "@/utils/types"
+import {verifyToken} from "@/utils/verifyToken"
 
 /**
  * @method DELETE
@@ -30,11 +31,10 @@ export async function DELETE(request: NextRequest, { params }: props) {
         }
 
         // const authToken = request.headers.get("authToken") as string
-        const cookieToken = request.cookies.get("cookieToken")
-        const token = cookieToken?.value as string
 
-        const authTokenFromTheUser = jsonwebtoken.verify(token, process.env.JWT_KEY as string) as typeJwt
-        if (authTokenFromTheUser.id === userAccount.id) {
+
+        const authTokenFromTheUser = verifyToken(request)
+        if ( authTokenFromTheUser !== null && authTokenFromTheUser.id === userAccount.id) {
             await prisma.user.delete({ where: { id: parseInt(params.id) } })
             return NextResponse.json({ message: "Your Profile Account Has Been Deleted" }, { status: 200 })
         }
