@@ -85,6 +85,21 @@ export async function GET(request: NextRequest, { params }: props) {
 }
 
 
+
+/**
+ * @method POST
+ * @route http://localhost:3000/api/profile:id
+ * @access private
+ * @description 
+ * - Added a POST request handler to update a user's profile information by ID.
+    - Included validation to check if the user exists before proceeding with the update.
+    - Integrated JWT authentication using `verifyToken` to ensure only authorized users can update their own profile.
+    - Added password encryption with bcrypt if the password is provided in the update request.
+    - Ensured sensitive data (password) is excluded from the response after updating the user.
+    - Returned appropriate status codes: 404 for user not found, 400 for token verification errors, and 200 for successful updates.
+    - Added error handling for any issues during the update process, with proper logging of errors.
+ */
+
 export async function POST(request: NextRequest, { params }: props) {
     try {
         const user = await prisma.user.findUnique({ where: { id: parseInt(params.id) } })
