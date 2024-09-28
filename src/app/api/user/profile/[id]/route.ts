@@ -4,6 +4,9 @@ import prisma from "@/utils/db";
 import jsonwebtoken from 'jsonwebtoken';
 import { typeJwt } from "@/utils/types"
 import { verifyToken } from "@/utils/verifyToken"
+import { updateUser } from "@/utils/postType";
+import { date } from "zod";
+import bcrypt from "bcryptjs"
 
 /**
  * @method DELETE
@@ -77,6 +80,39 @@ export async function GET(request: NextRequest, { params }: props) {
 
     } catch (error) {
         console.error("Error Geting Your Account.Try again later:", error); // Log the actual error
+        return NextResponse.json({ message: "Internal server error" }, { status: 500 });
+    }
+}
+
+
+export async function POST(request: NextRequest, { params }: props) {
+    try {
+        const user = await prisma.user.findUnique({ where: { id: parseInt(params.id) } })
+        if (!user) {
+            return NextResponse.json({ message: "User Not Found" }, { status: 400 })
+        }
+
+        const userToken = verifyToken(request)
+        if (userToken === null || userToken.id !== user.id) {
+            return NextResponse.json({ message: "Error Verifying User Token" }, { status: 400 })
+        }
+
+        const body = await request.json() as updateUser
+        if(body.password){
+            const salt = await bcrypt.genSalt(10)
+            body.password = await bcrypt.hash(body.password, salt)
+        }
+        const updatedUser = await prisma.user.update({where:{id: parseInt(params.id)},data : {
+            userName : body.userName,
+            email : body.email,
+            password : body.password
+        }})
+
+        const {password, ...other} = updatedUser
+        return NextResponse.json({...other},{status:200})
+
+    } catch (error) {
+        console.error("Error Updating Your Account.Try again later:", error); // Log the actual error
         return NextResponse.json({ message: "Internal server error" }, { status: 500 });
     }
 }
