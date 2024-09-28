@@ -54,13 +54,11 @@ export async function DELETE(request: NextRequest, { params }: props) {
  * @route http://localhost:3000/api/profile:id
  * @access private
  * @description 
- *  - Implemented GET request to Get a user account by ID.
-    - Added validation to check if the user account exists before attempting GET.
-    - Handled errors and return appropriate status codes (404 for not found, 200 for successful deletion, 500 for internal errors).
-    - Implemented JWT authentication to verify that the user is authorized to delete their own account.
-    - Added a check to ensure the auth token is provided in the request headers.
-    - Used `jsonwebtoken.verify()` to decode the token and compare the user ID with the account to be deleted.
-    - Added proper error handling for missing or invalid tokens and unauthorized actions.
+ * - Added a GET request handler to retrieve a user account by ID.
+    - Implemented validation to check if the user exists in the database before attempting to return the account data.
+    - Integrated JWT authentication using `verifyToken` to ensure only the authorized user can access their own account.
+    - Returned appropriate status codes: 404 if the user is not found, 400 for token verification errors, and 200 for successful account retrieval.
+    - Included error handling for invalid tokens or internal server issues, with proper logging of errors.
  */
 
 export async function GET(request: NextRequest, { params }: props) {
