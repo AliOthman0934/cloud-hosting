@@ -87,11 +87,11 @@ export async function GET(request: NextRequest, { params }: props) {
 
 
 /**
- * @method POST
+ * @method PUT
  * @route http://localhost:3000/api/profile:id
  * @access private
  * @description 
- * - Added a POST request handler to update a user's profile information by ID.
+ * - Added a PUT request handler to update a user's profile information by ID.
     - Included validation to check if the user exists before proceeding with the update.
     - Integrated JWT authentication using `verifyToken` to ensure only authorized users can update their own profile.
     - Added password encryption with bcrypt if the password is provided in the update request.
@@ -100,7 +100,7 @@ export async function GET(request: NextRequest, { params }: props) {
     - Added error handling for any issues during the update process, with proper logging of errors.
  */
 
-export async function POST(request: NextRequest, { params }: props) {
+export async function PUT(request: NextRequest, { params }: props) {
     try {
         const user = await prisma.user.findUnique({ where: { id: parseInt(params.id) } })
         if (!user) {
@@ -114,6 +114,9 @@ export async function POST(request: NextRequest, { params }: props) {
 
         const body = await request.json() as updateUser
         if(body.password){
+            if(body.password.length < 6){
+                return NextResponse.json({message:"Passsword Shold Be At Minimum 6 Characters"},{status:400})
+            }
             const salt = await bcrypt.genSalt(10)
             body.password = await bcrypt.hash(body.password, salt)
         }

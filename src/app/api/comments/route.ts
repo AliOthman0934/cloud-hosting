@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
         const validation = addCommentSchema.safeParse(body)
 
         if (!validation.success) {
-            return NextResponse.json({ message: validation.error.errors[0].message }, { status: 400 })
+            return NextResponse.json({ message: validation.error.errors[0].message }, { status: 402 })
         }
 
         const newComment = prisma.comment.create({
@@ -43,5 +43,20 @@ export async function POST(request: NextRequest) {
         console.error("Error Adding Comment.Try again later:", error); // Log the actual error
         return NextResponse.json({ message: "Internal server error" }, { status: 500 });
     }
+
+}
+
+
+export function GET(request: NextRequest) {
+    try {
+        const user = verifyToken(request)
+        if (user === null || user.isAdmin === false) {
+            return NextResponse.json({ message: "Only Admin Can Get All The Comments" }, { status: 403 })
+        }
+    } catch (error) {
+        console.error("Error Geting All The Comment.Try again later:", error); // Log the actual error
+        return NextResponse.json({ message: "Internal server error" }, { status: 500 });
+    }
+
 
 }
