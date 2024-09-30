@@ -1,4 +1,4 @@
-import { string, z } from "zod";
+import { number, string, z } from "zod";
 
 export const newArticleSchema = z.object({
     title: z.string({
@@ -22,4 +22,9 @@ export const newUserSchema = z.object({
 export const logInUserSchema = z.object({
     email : z.string().email(),
     password: z.string().min(6)
+})
+
+export const addCommentSchema = z.object({
+    text : z.string().min(2).max(500),
+    articleId : number()
 })

@@ -24,3 +24,8 @@ export interface updateUser{
     email? : string,
     password? : string
 }
+
+export interface addComment{
+    text: string,
+    articleId: number
+}
