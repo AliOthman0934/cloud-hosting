@@ -47,16 +47,32 @@ export async function POST(request: NextRequest) {
 }
 
 
+
+
+/**
+ * @method GET
+ * @route http://localhost:3000/api/comments
+ * @access private
+ * @description 
+/**
+    - Added a GET request handler for retrieving all comments from the database.
+    - Implemented JWT authentication using `verifyToken` to ensure only admin users can access the comments.
+    - Added validation to restrict access to non-admin users, returning a 403 status if unauthorized.
+    - Successfully fetched all comments using `prisma.comment.findMany()` for admin users.
+    - Included error handling for token verification issues and internal server errors, with appropriate logging.
+    - Returned status codes: 403 for non-admin users, 200 for successful data retrieval, and 500 for server errors.
+ */
+
 export function GET(request: NextRequest) {
     try {
         const user = verifyToken(request)
         if (user === null || user.isAdmin === false) {
             return NextResponse.json({ message: "Only Admin Can Get All The Comments" }, { status: 403 })
         }
+        const comments = prisma.comment.findMany()
+        return NextResponse.json(comments, { status: 200 })
     } catch (error) {
         console.error("Error Geting All The Comment.Try again later:", error); // Log the actual error
         return NextResponse.json({ message: "Internal server error" }, { status: 500 });
     }
-
-
 }
