@@ -29,3 +29,7 @@ export interface addComment{
     text: string,
     articleId: number
 }
+
+export interface editComment{
+    text: string,
+}
