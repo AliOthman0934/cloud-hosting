@@ -5,6 +5,22 @@ import { string } from "zod";
 import { editComment } from "@/utils/postType";
 
 
+/**
+ * @method PUT
+ * @route http://localhost:3000/api/comments:id
+ * @access private
+ * @description 
+/**
+    - Added a PUT request handler to allow users to edit their comments.
+    - Implemented JWT authentication using `verifyToken` to ensure that only the comment owner can edit the comment.
+    - Added validation to check if the comment exists before attempting to update.
+    - Restricted access to editing, returning a 403 status if the user is not the owner of the comment.
+    - Updated the comment text using `prisma.comment.update()` for the authorized user.
+    - Included error handling for cases of missing comments, unauthorized access, and internal server errors.
+    - Returned appropriate status codes: 404 for not found, 403 for unauthorized, and 200 for successful update.
+ */
+
+
 interface props {
     params: { id: string }
 }
