@@ -55,6 +55,21 @@ export async function PUT(request: NextRequest, { params }: props) {
 }
 
 
+
+/**
+ * @method DELETE
+ * @route http://localhost:3000/api/comments:id
+ * @access private
+ * @description 
+/**
+    - Implemented DELETE request to remove a comment by ID using Prisma.
+    - Added validation to check if the comment exists before attempting deletion, returning a 404 status if not found.
+    - Used JWT authentication (`verifyToken`) to ensure that only the comment owner or an admin can delete the comment.
+    - Admins are allowed to delete any comment, while regular users can only delete their own comments.
+    - Added error handling for unauthorized access with a 403 status code.
+    - Included appropriate status codes: 404 for not found, 403 for unauthorized, and 200 for successful deletion.
+ */
+
 export async function DELETE(request:NextRequest,{ params }: props){
     try {
         const comment = await prisma.comment.findUnique({ where: { id: parseInt(params.id) } })
