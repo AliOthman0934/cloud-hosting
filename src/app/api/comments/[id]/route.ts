@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/utils/db";
 import { verifyToken } from "@/utils/verifyToken"
-import { string } from "zod";
+import { date, string } from "zod";
 import { editComment } from "@/utils/postType";
 
 
@@ -50,6 +50,32 @@ export async function PUT(request: NextRequest, { params }: props) {
         return NextResponse.json(updatdeComment, { status: 200 })
     } catch (error) {
         console.error("Error Editing Comment.Try again later:", error); // Log the actual error
+        return NextResponse.json({ message: "Internal server error" }, { status: 500 });
+    }
+}
+
+
+export async function DELETE(request:NextRequest,{ params }: props){
+    try {
+        const comment = await prisma.comment.findUnique({ where: { id: parseInt(params.id) } })
+        if (!comment) {
+            return NextResponse.json({ message: "Comment Not Foun" }, { status: 404 })
+        }
+        
+        const user = verifyToken(request)
+
+        if (user === null) {
+            return NextResponse.json({ message: "You Are Not Allowed To Edit The Comment" }, { status: 403 })
+        }
+
+        if(user.isAdmin === true || user.id === comment.id){
+            await prisma.comment.delete({where:{id:parseInt(params.id)}})
+            return NextResponse.json({message:"Your Comment Has Been Deleted"},{status:200})
+        }
+
+        return NextResponse.json({message:"Somthing Went Wron Try Letter"},{status:403})
+    } catch (error) {
+        console.error("Error Deleting Comment.Try again later:", error); // Log the actual error
         return NextResponse.json({ message: "Internal server error" }, { status: 500 });
     }
 }
