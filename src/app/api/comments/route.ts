@@ -25,20 +25,21 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ message: "Please Log In First" }, { status: 401 })
         }
         const body = await request.json() as addComment
+        console.log(body)
         const validation = addCommentSchema.safeParse(body)
 
         if (!validation.success) {
             return NextResponse.json({ message: validation.error.errors[0].message }, { status: 402 })
         }
 
-        const newComment = prisma.comment.create({
+        const newComment = await prisma.comment.create({
             data: {
                 text: body.text,
                 articleId: body.articleId,
                 userId: user.id
             }
         })
-        return NextResponse.json({ message: newComment }, { status: 200 })
+        return NextResponse.json( newComment, { status: 200 })
     } catch (error) {
         console.error("Error Adding Comment.Try again later:", error); // Log the actual error
         return NextResponse.json({ message: "Internal server error" }, { status: 500 });
