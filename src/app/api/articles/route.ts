@@ -17,10 +17,11 @@ import { error } from "console";
  * @route http://localhost:3000/api/articles?pageNumber=1
  * @access public
  * @description 
- *  - Created GET handler for fetching articles data using Next.js API routes based on the pagination.
-    - Utilized `NextRequest` and `NextResponse` from "next/server" to return the data.
-    - Added a status code of 200 for successful responses.
-    - Imported articles data from the utils/data file for the response.
+ * - Added a GET handler to fetch articles based on pagination using `pageNumber` query parameter.
+    - Integrated `NextRequest` and `NextResponse` to handle API requests and responses.
+    - Implemented pagination logic with `skip` and `take` to control the number of articles retrieved per page.
+    - Handled success responses with a 200 status code and proper error handling for server-side issues.
+    - Articles are fetched from the Prisma ORM to retrieve data from the database.
  */
 
 export async function GET(request: NextRequest) {
