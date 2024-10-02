@@ -5,6 +5,7 @@ import { typeArticles } from "@/utils/types";
 import { newArticleSchema } from "@/utils/validation"
 import { createArticle } from "@/utils/postType"
 import prisma from "@/utils/db"
+import {numberOfArticles} from "@/utils/constants"
 import { title } from "process";
 import { error } from "console";
 
@@ -13,10 +14,10 @@ import { error } from "console";
 
 /**
  * @method GET 
- * @route http://localhost:3000/api/articles
+ * @route http://localhost:3000/api/articles?pageNumber=1
  * @access public
  * @description 
- *  - Created GET handler for fetching articles data using Next.js API routes.
+ *  - Created GET handler for fetching articles data using Next.js API routes based on the pagination.
     - Utilized `NextRequest` and `NextResponse` from "next/server" to return the data.
     - Added a status code of 200 for successful responses.
     - Imported articles data from the utils/data file for the response.
@@ -24,7 +25,12 @@ import { error } from "console";
 
 export async function GET(request: NextRequest) {
     try {
-        const getArticle = await prisma.article.findMany();
+        const pageNumber = request.nextUrl.searchParams.get("pageNumber") || "1"
+        
+        const getArticle = await prisma.article.findMany({
+            skip : numberOfArticles * (parseInt(pageNumber) - 1),
+            take : numberOfArticles
+        });
         return NextResponse.json(getArticle, { status: 200 })
     } catch (error) {
         console.error("Error fetching articles:", error); // Log the actual error
