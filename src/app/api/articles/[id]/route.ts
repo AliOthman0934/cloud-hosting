@@ -22,11 +22,23 @@ interface articleId {
 
 export async function GET(request: NextRequest, { params }: articleId) {
     try {
-        const singleArticle = prisma.article.findUnique({ where: { id: parseInt(params.id) } })
+        const singleArticle = await prisma.article.findUnique(
+            { where: { id: parseInt(params.id) },
+            include : {comments:{
+                include : {user:{
+                    select :{
+                        userName: true
+                    }
+                }},
+                orderBy: {
+                    createdAt : "desc"
+                }
+            }}
+    })
         if (!singleArticle) {
             return NextResponse.json({ message: "Article Not Found" }, { status: 404 })
         }
-        return NextResponse.json({ singleArticle }, { status: 200 });
+        return NextResponse.json(singleArticle , { status: 200 });
     } catch (error) {
         console.error("Error fetching article:", error); // Log the actual error
         return NextResponse.json({ message: "Internal server error" }, { status: 500 });
