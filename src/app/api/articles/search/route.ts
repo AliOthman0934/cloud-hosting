@@ -18,7 +18,10 @@ export async function GET(request:NextRequest){
         const searchText = request.nextUrl.searchParams.get("searchText")
         let articles;
         if(searchText){
-            articles = await prisma.article.findMany({where : {title : searchText}})
+            articles = await prisma.article.findMany({where : {title : {
+                startsWith: searchText,
+                mode : "insensitive"
+            }}})
         } else{
             articles = await prisma.article.findMany({take : 6})
         }
