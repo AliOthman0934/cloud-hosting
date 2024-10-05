@@ -7,6 +7,7 @@ import { verifyToken } from "@/utils/verifyToken"
 import { updateUser } from "@/utils/postType";
 import { date } from "zod";
 import bcrypt from "bcryptjs"
+import { updateUserSchema } from "@/utils/validation";
 
 /**
  * @method DELETE
@@ -118,10 +119,11 @@ export async function PUT(request: NextRequest, { params }: props) {
         }
 
         const body = await request.json() as updateUser
+        const validation = updateUserSchema.safeParse(body)
+        if(!validation.success){
+            return NextResponse.json({message: validation.error.errors[0].message})
+        }
         if(body.password){
-            if(body.password.length < 6){
-                return NextResponse.json({message:"Passsword Shold Be At Minimum 6 Characters"},{status:400})
-            }
             const salt = await bcrypt.genSalt(10)
             body.password = await bcrypt.hash(body.password, salt)
         }
