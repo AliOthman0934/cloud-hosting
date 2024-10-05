@@ -28,7 +28,10 @@ interface props {
 
 export async function DELETE(request: NextRequest, { params }: props) {
     try {
-        const userAccount = await prisma.user.findUnique({ where: { id: parseInt(params.id) } })
+        const userAccount = await prisma.user.findUnique({ where: { id: parseInt(params.id) },include :{
+            comments : true
+        } })
+
         if (!userAccount) {
             return NextResponse.json({ message: "User Not Found" }, { status: 404 })
         }
@@ -39,6 +42,8 @@ export async function DELETE(request: NextRequest, { params }: props) {
         const authTokenFromTheUser = verifyToken(request)
         if (authTokenFromTheUser !== null && authTokenFromTheUser.id === userAccount.id) {
             await prisma.user.delete({ where: { id: parseInt(params.id) } })
+            const userCommentId = userAccount?.comments.map(comment => comment.id)
+            await prisma.comment.deleteMany({where:{id : {in : userCommentId}}})
             return NextResponse.json({ message: "Your Profile Account Has Been Deleted" }, { status: 200 })
         }
 
