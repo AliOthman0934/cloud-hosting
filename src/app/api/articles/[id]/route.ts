@@ -100,11 +100,18 @@ interface articleId {
 
 export async function DELETE(request: NextRequest, { params }: articleId) {
     try {
-        const singleArticle = await prisma.article.findUnique({ where: { id: parseInt(params.id) } });
+        const singleArticle = await prisma.article.findUnique({ where: { id: parseInt(params.id) }, include:{
+            comments : true
+        } });
         if (!singleArticle) {
             return NextResponse.json({ message: "Article Not Found" }, { status: 404 })
         }
+
         await prisma.article.delete({ where: { id: parseInt(params.id) } })
+
+        const articleCommentId = singleArticle?.comments.map(comment => comment.id)
+        await prisma.comment.deleteMany({where: {id :{in : articleCommentId}}})
+
         return NextResponse.json({ message: "Article deleted" }, { status: 200 });
     } catch (error) {
         console.error("Error deleting article:", error); // Log the actual error
