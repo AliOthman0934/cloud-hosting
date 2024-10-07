@@ -6,10 +6,13 @@ import Pagination from "../components/Article/pagination";
 import { resolve } from "dns/promises";
 import { Article } from "@prisma/client";
 
-
-const Articlepage = async () => {
+interface pageNumber {
+    searchParams : {pageNumber :string}
+}
+const Articlepage = async ({searchParams}:pageNumber) => {
+    const {pageNumber} = searchParams
     await new Promise((resolve) => setTimeout(resolve, 3000));
-    const getArticles = await fetch(`http://localhost:3000/api/articles?pageNumber=${1}`);
+    const getArticles = await fetch(`http://localhost:3000/api/articles?pageNumber=${pageNumber}`);
 
     if (!getArticles.ok) {
         throw new Error("Somthing went wrong try agin")
