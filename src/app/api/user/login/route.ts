@@ -9,6 +9,21 @@ import { typeJwt } from "@/utils/types";
 import {serialize} from "cookie"
 import {sitCookie} from "@/utils/jwt" 
 
+/**
+ * @method POST
+ * @route http://localhost:3000/api/user/login
+ * @access private
+ * @description 
+/**
+    Added POST request handler for user login.
+    - Integrated user validation with `logInUserSchema` to ensure proper data structure.
+    - Utilized bcrypt to compare hashed passwords for user authentication.
+    - Generated a JWT payload with user information upon successful login.
+    - Created a secure HTTP-only cookie to store the authentication token.
+    - Set cookie in the response headers for subsequent user requests.
+    - Added error handling for invalid email, password mismatch, and server issues.
+ */
+
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json() as logInUser
