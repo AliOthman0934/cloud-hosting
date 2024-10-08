@@ -5,25 +5,19 @@ import SearchArticle from "../components/Article/SearchArticle";
 import Pagination from "../components/Article/pagination";
 import { resolve } from "dns/promises";
 import { Article } from "@prisma/client";
+import { getArticles,getArticlesCount } from "@/apiCalles/getArticlesApi";
+import { numberOfArticles } from "@/utils/constants";
 
 interface pageNumber {
     searchParams: { pageNumber: string }
 }
 
-async function getArticles(pageNumber: string | undefined): Promise<Article[]> {
-    const getArticles = await fetch(`http://localhost:3000/api/articles?pageNumber=${pageNumber}`);
-
-    if (!getArticles.ok) {
-        throw new Error("Somthing went wrong try agin")
-    }
-    return getArticles.json();
-}
-
-
 const Articlepage = async ({ searchParams }: pageNumber) => {
     const { pageNumber } = searchParams
     await new Promise((resolve) => setTimeout(resolve, 3000));
     const articles: Article[] = await getArticles(pageNumber);
+    const count = await getArticlesCount();
+    const pages = Math.ceil(count / numberOfArticles) 
     return (
         <section className="container m-auto px-5 h-screen">
             <SearchArticle />
@@ -32,7 +26,7 @@ const Articlepage = async ({ searchParams }: pageNumber) => {
                     <ArticlePage article={item} key={item.id} />
                 )}
             </div>
-            <Pagination />
+            <Pagination pageNumber={parseInt(pageNumber)} route="/articles" page={pages}/>
         </section>
 
     )
