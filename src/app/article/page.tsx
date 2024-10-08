@@ -7,17 +7,23 @@ import { resolve } from "dns/promises";
 import { Article } from "@prisma/client";
 
 interface pageNumber {
-    searchParams : {pageNumber :string}
+    searchParams: { pageNumber: string }
 }
-const Articlepage = async ({searchParams}:pageNumber) => {
-    const {pageNumber} = searchParams
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+
+async function getArticles(pageNumber: string | undefined): Promise<Article[]> {
     const getArticles = await fetch(`http://localhost:3000/api/articles?pageNumber=${pageNumber}`);
 
     if (!getArticles.ok) {
         throw new Error("Somthing went wrong try agin")
     }
-    const articles: Article[] = await getArticles.json();
+    return getArticles.json();
+}
+
+
+const Articlepage = async ({ searchParams }: pageNumber) => {
+    const { pageNumber } = searchParams
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+    const articles: Article[] = await getArticles(pageNumber);
     return (
         <section className="container m-auto px-5 h-screen">
             <SearchArticle />
