@@ -10,11 +10,29 @@ export async function getArticles(pageNumber: string | undefined): Promise<Artic
 }
 
 export async function getArticlesCount(): Promise<number> {
-    const getArticles = await fetch(`http://localhost:3000/api/articles/count`);
+    try {
+        const response = await fetch(`http://localhost:3000/api/articles/count`);
+        
+        if (!response.ok) {
+            console.error("Failed to fetch articles count. Status:", response.status);
+            throw new Error("Something went wrong. Try again.");
+        }
 
-    if (!getArticles.ok) {
-        throw new Error("Somthing went wrong try agin")
+        // Parse the response as text, since it's a plain number
+        const countText = await response.text();
+        
+        // Convert the text to a number
+        const count = Number(countText);
+        if (isNaN(count)) {
+            console.error("Invalid count format:", countText);
+            throw new Error("Invalid data format from API");
+        }
+
+        console.log("countFromFunction:", count);
+        return count;
+
+    } catch (error) {
+        console.error("Error in getArticlesCount:", error);
+        throw error;
     }
-    const{count} = await getArticles.json() as {count:number};
-    return count
 }

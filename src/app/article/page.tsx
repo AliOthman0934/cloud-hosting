@@ -16,8 +16,10 @@ const Articlepage = async ({ searchParams }: pageNumber) => {
     const { pageNumber } = searchParams
     await new Promise((resolve) => setTimeout(resolve, 3000));
     const articles: Article[] = await getArticles(pageNumber);
-    const count = await getArticlesCount();
+    const count:number = await getArticlesCount();
+    console.log(count)
     const pages = Math.ceil(count / numberOfArticles) 
+    console.log("pages",pages)
     return (
         <section className="container m-auto px-5 h-screen">
             <SearchArticle />
