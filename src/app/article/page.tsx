@@ -28,7 +28,7 @@ const Articlepage = async ({ searchParams }: pageNumber) => {
                     <ArticlePage article={item} key={item.id} />
                 )}
             </div>
-            <Pagination pageNumber={parseInt(pageNumber)} route="/articles" page={pages}/>
+            <Pagination pageNumber={parseInt(pageNumber)} route="/article" page={pages}/>
         </section>
 
     )
