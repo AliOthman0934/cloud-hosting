@@ -6,7 +6,12 @@ interface paginationProps {
     route: string;
 }
 
+
+
+
 const Pagination = ({ page, pageNumber, route }: paginationProps) => {
+    const prev = pageNumber - 1
+    const next = pageNumber + 1
     let pageArray: number[] = [];
 
     // Log the page value for debugging
@@ -21,21 +26,27 @@ const Pagination = ({ page, pageNumber, route }: paginationProps) => {
 
     return (
         <div className="flex justify-center items-center space-x-2 m-auto my-5">
-            <div className="p-2 border rounded cursor-pointer hover:bg-gray-200">
-                Prev
-            </div>
+            {pageNumber !== 1 &&
+                <Link href={`${route}?pageNumber=${prev}`} className="p-2 border rounded cursor-pointer hover:bg-gray-200">
+                    Prev
+                </Link>
+            }
+
             {pageArray.map(pages => (
                 <Link
                     href={`${route}?pageNumber=${pages}`}  // Fix the href here to use "pages"
                     key={pages}
-                    className="p-2 border rounded cursor-pointer hover:bg-gray-200"
+                    className={`${pageNumber === pages ? "bg-gray-300": ""}p-2 border rounded cursor-pointer hover:bg-gray-200`}
                 >
                     {pages}
                 </Link>
             ))}
-            <div className="p-2 border rounded cursor-pointer hover:bg-gray-200">
-                Next
-            </div>
+
+            {pageNumber !== page &&
+                <Link href={`${route}?pageNumber=${next}`} className="p-2 border rounded cursor-pointer hover:bg-gray-200">
+                    Next
+                </Link>
+            }
         </div>
     );
 };
