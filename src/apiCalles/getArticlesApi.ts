@@ -36,3 +36,12 @@ export async function getArticlesCount(): Promise<number> {
         throw error;
     }
 }
+
+export async function getSearchedArticle(searchText: string): Promise<Article[]> {
+    const SearchedArticle = await fetch(`http://localhost:3000/api/articles/search?searchText=${searchText}`);
+
+    if (!SearchedArticle.ok) {
+        throw new Error("Error Fetching Searched Article ")
+    }
+    return SearchedArticle.json();
+}
