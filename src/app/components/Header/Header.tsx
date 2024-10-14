@@ -1,11 +1,14 @@
 import { headers } from 'next/headers'
 import React from 'react'
 import Link from 'next/link'
-
+import { cookies } from 'next/headers';
 import styles from './Header.module.css';
 import Navbar from './Navbar';
+import { verifyTokenPage } from '@/utils/verifyToken';
 
 const Header = () => {
+    const token = cookies().get("cookieToken")?.value || ""
+    const payload = verifyTokenPage(token)
     return (
         <header className={styles.header}>
             <Navbar/>
