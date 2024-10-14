@@ -11,10 +11,14 @@ const Header = () => {
     const payload = verifyTokenPage(token)
     return (
         <header className={styles.header}>
-            <Navbar/>
+            <Navbar />
             <div className={styles.right}>
-                <Link href="./login" className={styles.btn}>log in</Link>
-                <Link href="./register" className={styles.btn}>register</Link>
+                {payload ? (<></>) :
+                <>
+                    <Link href="./login" className={styles.btn}>log in</Link>
+                    <Link href="./register" className={styles.btn}>register</Link>
+                </>
+                }
             </div>
         </header>
     )
