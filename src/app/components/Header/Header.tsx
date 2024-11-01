@@ -13,11 +13,13 @@ const Header = () => {
         <header className={styles.header}>
             <Navbar />
             <div className={styles.right}>
-                {payload ? (<></>) :
-                <>
+                {payload ? (<><strong className='text-blue-800 md:text-xl capitalize'>{payload?.userName}</strong></>) : (
+                    <>                    
                     <Link href="./login" className={styles.btn}>log in</Link>
                     <Link href="./register" className={styles.btn}>register</Link>
-                </>
+                    </>
+                )
+
                 }
             </div>
         </header>
