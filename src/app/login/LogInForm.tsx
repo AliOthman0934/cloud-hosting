@@ -21,11 +21,12 @@ const LogInForm = () => {
         try {
             await axios.post("http://localhost:3000/api/user/login", { password, email })
             router.replace("./")
-        } catch (error:any) {
+            router.refresh()
+        } catch (error: any) {
             toast.error(error?.response?.data.error)
         }
     }
-    
+
     return (
         <form className='flex flex-col' onSubmit={submitFormHandler}>
             <input
