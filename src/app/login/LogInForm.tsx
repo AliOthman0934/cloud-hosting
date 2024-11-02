@@ -3,9 +3,11 @@ import React, { ReactEventHandler, useState } from "react"
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import axios from "axios"
+import { boolean } from "zod";
 
 const LogInForm = () => {
     const router = useRouter();
+    const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const submitFormHandler = async (e: React.FormEvent) => {
@@ -19,9 +21,11 @@ const LogInForm = () => {
         }
 
         try {
+            setLoading(true)
             await axios.post("http://localhost:3000/api/user/login", { password, email })
             router.replace("./")
-            router.refresh()
+            setLoading(false)
+            
         } catch (error: any) {
             toast.error(error?.response?.data.error)
         }
@@ -41,7 +45,9 @@ const LogInForm = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className='mb-2 border rounded p-2 text-xl' />
-            <button type='submit' className='text-2xl text-white bg-blue-800 p-2 rounded-lg font-bold'>Login</button>
+            <button type='submit' className='text-2xl text-white bg-blue-800 p-2 rounded-lg font-bold'>
+                    {loading ? "Loding..." : "LogIn"}
+            </button>
         </form>
     )
 }
