@@ -10,6 +10,7 @@ function Logout() {
         try {
             await axios.get("http://localhost:3000/api/user/logout")
             router.push("/")
+            router.refresh()
         } catch (error) {
             toast.warning("Somthing went wrong")
             console.log(error)
