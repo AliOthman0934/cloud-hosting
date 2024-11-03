@@ -1,12 +1,15 @@
 "use client"
 import React, { ReactEventHandler, useState } from "react"
 import { toast } from "react-toastify";
+import axios from "axios"
+import { useRouter } from "next/navigation";
 
 const RegisterForm = () => {
     const [userName, setUserNmae] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const submitFormHandler = (e:React.FormEvent) => {
+    const router = useRouter();
+    const submitFormHandler = async (e:React.FormEvent) => {
         e.preventDefault();
         if(userName === ""){
             return toast.error("User Name Is Required")
@@ -17,6 +20,16 @@ const RegisterForm = () => {
         
         if(password === ""){
             return toast.error("Password Is Required")
+        }
+
+        try {
+            axios.post("http://localhost:3000/api/user/register",{email,password,userName})
+            router.replace("./")
+            router.refresh()
+
+        } catch (error:any) {
+            toast.error(error?.response?.data.message)
+            console.log(error)
         }
     }
     return (
