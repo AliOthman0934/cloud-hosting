@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import axios from "axios"
 import { boolean } from "zod";
+import ButtenSpinner from "../components/ButtenSpinner";
 
 const LogInForm = () => {
     const router = useRouter();
@@ -45,8 +46,8 @@ const LogInForm = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className='mb-2 border rounded p-2 text-xl' />
-            <button type='submit' className='text-2xl text-white bg-blue-800 p-2 rounded-lg font-bold'>
-                    {loading ? "Loding..." : "LogIn"}
+            <button disabled={loading} type='submit' className='text-2xl text-white bg-blue-800 p-2 rounded-lg font-bold'>
+                    {loading ? <ButtenSpinner/> : "LogIn"}
             </button>
         </form>
     )
