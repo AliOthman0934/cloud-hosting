@@ -25,6 +25,7 @@ const LogInForm = () => {
             setLoading(true)
             await axios.post("http://localhost:3000/api/user/login", { password, email })
             router.replace("./")
+            router.refresh()
             setLoading(false)
             
         } catch (error: any) {
