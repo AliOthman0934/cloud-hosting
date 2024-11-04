@@ -24,7 +24,7 @@ const RegisterForm = () => {
 
         try {
             await axios.post("http://localhost:3000/api/user/register",{email,password,userName})
-            router.replace("./")
+            router.replace("/")
             router.refresh()
 
         } catch (error:any) {
