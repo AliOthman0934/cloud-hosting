@@ -45,3 +45,12 @@ export async function getSearchedArticle(searchText: string): Promise<Article[]>
     }
     return SearchedArticle.json();
 }
+
+
+export async function getSingleArticle(articleId: string){
+    const response = await fetch(`http://localhost:3000/api/articles/${articleId}`)
+    if(!response.ok){
+        throw new Error("Error fetching single article")
+    }
+    return response.json();
+}
