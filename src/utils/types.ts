@@ -1,12 +1,10 @@
-export type typeArticles = {
-    id: number,
-    userId: number,
-    title: string,
-    body: string
-}
+import { Article,User,comment } from "@prisma/client"
 
 export type typeJwt = {
     id : number,
     userName :string,
     isAdmin : boolean
 }
+
+export type commentWithUser = comment & {user : User}
+export type typeSingleArticle = Article & {commentes : commentWithUser[]}
