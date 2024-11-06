@@ -1,4 +1,6 @@
+import { typeSingleArticle } from "@/utils/types";
 import { Article } from "@prisma/client";
+import { promises } from "dns";
 
 export async function getArticles(pageNumber: string | undefined): Promise<Article[]> {
     const getArticles = await fetch(`http://localhost:3000/api/articles?pageNumber=${pageNumber}`);
@@ -47,8 +49,8 @@ export async function getSearchedArticle(searchText: string): Promise<Article[]>
 }
 
 
-export async function getSingleArticle(articleId: string){
-    const response = await fetch(`http://localhost:3000/api/articles/${articleId}`)
+export async function getSingleArticle(articleId: string):Promise<typeSingleArticle>{
+    const response = await fetch(`http://localhost:3000/api/articles/${articleId}`,{cache:"no-store"})
     if(!response.ok){
         throw new Error("Error fetching single article")
     }
