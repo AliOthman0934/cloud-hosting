@@ -7,4 +7,4 @@ export type typeJwt = {
 }
 
 export type commentWithUser = comment & {user : User}
-export type typeSingleArticle = Article & {commentes : commentWithUser[]}
+export type typeSingleArticle = Article & {comments : commentWithUser[]}
