@@ -6,13 +6,16 @@ import { typeSingleArticle } from "@/utils/types"
 import { Article } from "@prisma/client"
 import { promises } from "dns"
 import { resolve } from "path"
+import { cookies } from "next/headers"
+import { verifyTokenPage } from "@/utils/verifyToken"
 
 interface singleArticle{
     params: {id: string}
 }
 
 const singleArticlePage = async ({params}:singleArticle) => {
-
+    const token = cookies().get("cookieToken")?.value || ""
+    const payload = verifyTokenPage(token)
     const singleArticle: typeSingleArticle = await getSingleArticle(params.id);
     return (
         <section className="fix-height container m-auto w-full px-5 pt-8 md:w-3/4">
@@ -21,7 +24,7 @@ const singleArticlePage = async ({params}:singleArticle) => {
                 <div className="text-gray-400">{new Date(singleArticle.createdAt).toDateString()}</div>
                 <p className="text-gray-800 text-xl mt-5">{singleArticle.description}</p>
             </div>
-            <AddCommentForm articleId={singleArticle.id}/>
+            {payload ? (<AddCommentForm articleId={singleArticle.id}/>) : (<p className="text-blue-600 md:text-xl">Log in to gain access for making commits and tracking contributions.</p>)}
             <h4 className="text-xl text-gray-800 ps-1 font-semibold mb-2 mt-7">
                 Commemt
             </h4>
