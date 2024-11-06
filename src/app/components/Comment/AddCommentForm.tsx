@@ -1,13 +1,29 @@
 "use client"
 import React, { ReactEventHandler, useState } from "react"
 import { toast } from "react-toastify";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { number } from "zod";
 
-const AddCommentForm = () => {
+interface AddCommentFormProps{
+    articleId : number
+}
+
+const AddCommentForm = ({articleId}: AddCommentFormProps) => {
+    const router = useRouter()
     const [text, setText] = useState("");
-    const submitFormHandler = (e:React.FormEvent) => {
+    const submitFormHandler = async (e:React.FormEvent) => {
         e.preventDefault();
         if(text === ""){
             return toast.error("Please Add A Comment")
+        }
+        try {
+            await axios.post("http://localhost:3000/api/comments",{text,articleId})
+            router.refresh()
+            setText("")
+        } catch (error:any) {
+            toast.error(error?.response?.data.message)
+            console.log(error)
         }
     }
     return (
