@@ -25,7 +25,10 @@ const singleArticlePage = async ({params}:singleArticle) => {
             <h4 className="text-xl text-gray-800 ps-1 font-semibold mb-2 mt-7">
                 Commemt
             </h4>
-            <CommentItem/>
+            {singleArticle.comments.map(comment =>(
+                <CommentItem key={comment.id} comment={comment}/>
+            ))}
+            
         </section>
     )
 }
