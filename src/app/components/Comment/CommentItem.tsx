@@ -1,5 +1,6 @@
 import { commentWithUser, typeSingleArticle } from "@/utils/types"
 import { FaEdit, FaTrash } from "react-icons/fa"
+import UpdateCommentModal from "./UpdateCommentModal"
 
 interface CommentItemPropes{
     comment : commentWithUser
@@ -17,6 +18,7 @@ const CommentItem = ({comment}:CommentItemPropes) => {
                 <FaEdit className="text-green-600 text-xl cursor-pointer"/>
                 <FaTrash className="text-red-600 text-xl cursor-pointer"/>
             </div>
+            <UpdateCommentModal/>
         </div>
     )
 }
