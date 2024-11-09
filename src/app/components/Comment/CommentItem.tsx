@@ -21,7 +21,7 @@ const CommentItem = ({comment}:CommentItemPropes) => {
                 <FaEdit onClick={()=>setOpen(true)} className="text-green-600 text-xl cursor-pointer"/>
                 <FaTrash className="text-red-600 text-xl cursor-pointer"/>
             </div>
-            {open && <UpdateCommentModal setOpen={setOpen}/>}
+            {open && <UpdateCommentModal setOpen={setOpen}  text={comment.text} commentId= {comment.id}/>}
         </div>
     )
 }
