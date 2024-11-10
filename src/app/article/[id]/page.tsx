@@ -29,7 +29,7 @@ const singleArticlePage = async ({params}:singleArticle) => {
                 Commemt
             </h4>
             {singleArticle.comments.map(comment =>(
-                <CommentItem key={comment.id} comment={comment}/>
+                <CommentItem key={comment.id} comment={comment} userId={payload?.id}/>
             ))}
             
         </section>
