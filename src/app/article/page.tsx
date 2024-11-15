@@ -1,6 +1,5 @@
 import Link from "next/link";
 import ArticlePage from "../components/Article/Article";
-import { typeArticles } from "@/utils/types"
 import SearchArticle from "../components/Article/SearchArticle";
 import Pagination from "../components/Article/pagination";
 import { resolve } from "dns/promises";
