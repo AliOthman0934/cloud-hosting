@@ -2,14 +2,15 @@
 
 import Link from "next/link"
 import styles from './Header.module.css';
+import { verifyTokenPage } from '@/utils/verifyToken';
 import { GrTechnology } from "react-icons/gr";
 import { CiMenuBurger } from "react-icons/ci";
 import { IoCloseSharp } from "react-icons/io5";
 import { useState } from "react";
 
 
-const Navbar = () => {
-
+const Navbar = ({ token }: { token: string | null }) => {
+    const payload = verifyTokenPage(token || "")
     const [toggel, setToggel] = useState(false);
 
     return (
@@ -35,7 +36,7 @@ const Navbar = () => {
                     <Link href="/" className={styles.link} onClick={() => setToggel(false)}>Home</Link>
                     <Link href="/about" className={styles.link} onClick={() => setToggel(false)}>About</Link>
                     <Link href="/article?pageNumber=1" className={styles.link} onClick={() => setToggel(false)}>Articale</Link>
-                    <Link href="/admin" className={styles.link} onClick={() => setToggel(false)}>Admin Dashboard</Link>
+                    {payload && (<Link href="/admin" className={styles.link} onClick={() => setToggel(false)}>Admin Dashboard</Link>)}
                 </ul>
             </div>
 
