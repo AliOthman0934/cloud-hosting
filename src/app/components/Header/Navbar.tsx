@@ -6,13 +6,12 @@ import { verifyTokenPage } from '@/utils/verifyToken';
 import { GrTechnology } from "react-icons/gr";
 import { CiMenuBurger } from "react-icons/ci";
 import { IoCloseSharp } from "react-icons/io5";
-import { useState } from "react";
+import { useState , useEffect } from "react";
 
 
-const Navbar = ({ token }: { token: string | null }) => {
-    const payload = verifyTokenPage(token || "")
+
+const Navbar = () => {
     const [toggel, setToggel] = useState(false);
-
     return (
         <nav className={styles.navbar}>
             <div>
@@ -36,7 +35,8 @@ const Navbar = ({ token }: { token: string | null }) => {
                     <Link href="/" className={styles.link} onClick={() => setToggel(false)}>Home</Link>
                     <Link href="/about" className={styles.link} onClick={() => setToggel(false)}>About</Link>
                     <Link href="/article?pageNumber=1" className={styles.link} onClick={() => setToggel(false)}>Articale</Link>
-                    {payload && (<Link href="/admin" className={styles.link} onClick={() => setToggel(false)}>Admin Dashboard</Link>)}
+                    <Link href="/admin" className={styles.link} onClick={() => setToggel(false)}>Admin Dashboard</Link>
+
                 </ul>
             </div>
 
