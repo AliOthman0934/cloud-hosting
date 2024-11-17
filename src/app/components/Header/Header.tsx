@@ -12,7 +12,7 @@ const Header = () => {
     const payload = verifyTokenPage(token)
     return (
         <header className={styles.header}>
-            <Navbar payload={payload} />
+            <Navbar payload={payload}/>
             <div className={styles.right}>
                 {payload ? (<><strong className='text-blue-800 md:text-xl capitalize'>{payload?.userName}</strong><Logout></Logout></>) : (
                     <>                    
