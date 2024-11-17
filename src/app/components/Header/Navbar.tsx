@@ -8,9 +8,11 @@ import { CiMenuBurger } from "react-icons/ci";
 import { IoCloseSharp } from "react-icons/io5";
 import { useState , useEffect } from "react";
 
+interface navbarProps {
+    payload : any
+}
 
-
-const Navbar = () => {
+const Navbar = ({payload} : navbarProps) => {
     const [toggel, setToggel] = useState(false);
     return (
         <nav className={styles.navbar}>
@@ -35,7 +37,7 @@ const Navbar = () => {
                     <Link href="/" className={styles.link} onClick={() => setToggel(false)}>Home</Link>
                     <Link href="/about" className={styles.link} onClick={() => setToggel(false)}>About</Link>
                     <Link href="/article?pageNumber=1" className={styles.link} onClick={() => setToggel(false)}>Articale</Link>
-                    <Link href="/admin" className={styles.link} onClick={() => setToggel(false)}>Admin Dashboard</Link>
+                    {payload && (<Link href="/admin" className={styles.link} onClick={() => setToggel(false)}>Admin Dashboard</Link>)}
 
                 </ul>
             </div>
