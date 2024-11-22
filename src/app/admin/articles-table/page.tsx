@@ -40,12 +40,13 @@ const AdminArticlePage = async ({searchParams : {pageNumber}} : AdminArticleTabl
                                 <button>Delete</button>
                             </td>
                             <td className='hidden lg:inline-block p-3'>
-                                <Link href={`article/${article.id}`} className='text-white bg-blue-600 rounded-lg p-2 hover:bg-blue-800'>Read More</Link>
+                                <Link href={`http://localhost:3000/article/${article.id}`} className='text-white bg-blue-600 rounded-lg p-2 hover:bg-blue-800'>Read More</Link>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+            <Pagination pageNumber={parseInt(pageNumber)} page={pages} route='/admin/articles-table'/>
         </section>
     )
 }
