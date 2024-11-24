@@ -7,6 +7,7 @@ import { Article } from '@prisma/client'
 import Link from 'next/link'
 import { getArticles,getArticlesCount } from '@/apiCalles/getArticlesApi'
 import Pagination from '@/app/components/Article/pagination'
+import DeleteArticleButton from './DeleteArticleButton'
 
 interface AdminArticleTableProps{
     searchParams : {pageNumber : string}
@@ -37,7 +38,7 @@ const AdminArticlePage = async ({searchParams : {pageNumber}} : AdminArticleTabl
                             <td className='hidden lg:inline-block text-gray-700 font-normal p-3'>{new Date(article.createdAt).toDateString()}</td>
                             <td className='p-3'>
                                 <Link href={`/admin/articles-table/edit/${article.id}`} className='bg-green-600 text-white rounded-lg py-1 px-2 inline-block text-center mb-2 me-2 lg:me-3 hover:bg-green-800 transition'>Edit</Link>
-                                <button>Delete</button>
+                                <DeleteArticleButton articleId={article.id}/>
                             </td>
                             <td className='hidden lg:inline-block p-3'>
                                 <Link href={`http://localhost:3000/article/${article.id}`} className='text-white bg-blue-600 rounded-lg p-2 hover:bg-blue-800'>Read More</Link>
