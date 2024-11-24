@@ -24,7 +24,7 @@ const DeleteArticleButton = ({articleId}:DeleteArticleButtonProps) => {
         }
     }
     return (
-        <div onClick={DeleteArticleButtonHandler}>
+        <div onClick={DeleteArticleButtonHandler} className='bg-red-600 text-white rounded-lg cursor-pointer inline-block text-center py-1 px-2 hover:bg-red-800 transition'>
             Delete
         </div>
     )
