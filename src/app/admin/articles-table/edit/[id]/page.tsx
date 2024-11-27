@@ -3,6 +3,7 @@ import { Article } from '@prisma/client'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import React from 'react'
+import EditArticleForm from './EditArticleForm'
 
 interface EditArticlePageProps {
     params : {id:string}
@@ -19,7 +20,7 @@ const EditArticlePage = async ({params}:EditArticlePageProps) => {
                 <h2 className='text-2xl text-green-700 font-semibold mb-4'>
                     Edit Article
                 </h2>
-                    
+                <EditArticleForm article={article}/>
             </div>
         </section>
     )
