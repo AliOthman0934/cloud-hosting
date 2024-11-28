@@ -3,7 +3,7 @@ import { Article } from "@prisma/client";
 import { promises } from "dns";
 
 export async function getArticles(pageNumber: string | undefined): Promise<Article[]> {
-    const getArticles = await fetch(`http://localhost:3000/api/articles?pageNumber=${pageNumber}`);
+    const getArticles = await fetch(`http://localhost:3000/api/articles?pageNumber=${pageNumber}`,{cache : "no-store"});
 
     if (!getArticles.ok) {
         throw new Error("Somthing went wrong try agin")
@@ -13,7 +13,7 @@ export async function getArticles(pageNumber: string | undefined): Promise<Artic
 
 export async function getArticlesCount(): Promise<number> {
     try {
-        const response = await fetch(`http://localhost:3000/api/articles/count`);
+        const response = await fetch(`http://localhost:3000/api/articles/count`,{cache : "no-store"});
         
         if (!response.ok) {
             console.error("Failed to fetch articles count. Status:", response.status);
