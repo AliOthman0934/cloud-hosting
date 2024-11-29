@@ -6,7 +6,9 @@ import { comment } from '@prisma/client'
 const AdminCommentPage = async () => {
     const token = cookies().get("cookieToken")?.value || ""
     if(!token) redirect("/")
-    const response = await fetch(`http://localhost:3000/api/comments`)
+    const response = await fetch(`http://localhost:3000/api/comments`,{headers: {
+        cookie:`cookieToken=${token}`,
+    }})
     if(!response.ok){
         throw new Error("Failed to fetch comments")
     }
