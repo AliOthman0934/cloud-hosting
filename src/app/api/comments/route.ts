@@ -64,13 +64,13 @@ export async function POST(request: NextRequest) {
     - Returned status codes: 403 for non-admin users, 200 for successful data retrieval, and 500 for server errors.
  */
 
-export function GET(request: NextRequest) {
+export async function GET(request: NextRequest) {
     try {
         const user = verifyToken(request)
-        if (user === null || user.isAdmin === false) {
+        if (user === null ) {
             return NextResponse.json({ message: "Only Admin Can Get All The Comments" }, { status: 403 })
         }
-        const comments = prisma.comment.findMany()
+        const comments = await prisma.comment.findMany()
         return NextResponse.json(comments, { status: 200 })
     } catch (error) {
         console.error("Error Geting All The Comment.Try again later:", error); // Log the actual error
