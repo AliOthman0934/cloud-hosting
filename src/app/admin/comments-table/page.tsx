@@ -2,6 +2,7 @@ import React from 'react'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { comment } from '@prisma/client'
+import DeleteCommentButton from './DeleteCommentButton'
 
 const AdminCommentPage = async () => {
     const token = cookies().get("cookieToken")?.value || ""
@@ -14,7 +15,7 @@ const AdminCommentPage = async () => {
     }
     const comments: comment[] = await response.json()
     return (
-        <section className='p-5'>
+        <section className=''>
             <h1 className='mb-7 text-2xl font-semibold text-gray-700'>Comments</h1>
             <table className='table w-full text-left '>
                 <thead className='border-t-2 border-b-2 border-gray-500 text-xl'>
@@ -32,7 +33,7 @@ const AdminCommentPage = async () => {
                                 {new Date(comment.createdAt).toDateString()}
                             </td>
                             <td>
-                                <button>Delete</button>
+                                <DeleteCommentButton commentId={comment.id}/>
                             </td>
                         </tr>
                     ))}
