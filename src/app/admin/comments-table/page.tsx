@@ -15,7 +15,7 @@ const AdminCommentPage = async () => {
     }
     const comments: comment[] = await response.json()
     return (
-        <section className=''>
+        <section className='p-5'>
             <h1 className='mb-7 text-2xl font-semibold text-gray-700'>Comments</h1>
             <table className='table w-full text-left '>
                 <thead className='border-t-2 border-b-2 border-gray-500 text-xl'>
