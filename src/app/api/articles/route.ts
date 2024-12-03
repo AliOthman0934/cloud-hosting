@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { string, z } from "zod";
-import { articlesData } from "../../../utils/data"
 import { newArticleSchema } from "@/utils/validation"
 import { createArticle } from "@/utils/postType"
 import prisma from "@/utils/db"

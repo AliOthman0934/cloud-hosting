@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { articlesData } from "@/utils/data"
 import { updateArticle } from "@/utils/postType"
 import prisma from "@/utils/db";
 
