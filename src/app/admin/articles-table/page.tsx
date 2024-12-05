@@ -3,11 +3,12 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { verifyTokenPage } from '@/utils/verifyToken'
 import { numberOfArticles } from '@/utils/constants'
-import { Article } from '@prisma/client'
+import { Article, Prisma } from '@prisma/client'
 import Link from 'next/link'
 import { getArticles,getArticlesCount } from '@/apiCalles/getArticlesApi'
 import Pagination from '@/app/components/Article/pagination'
 import DeleteArticleButton from './DeleteArticleButton'
+import prisma from "@/utils/db";
 
 interface AdminArticleTableProps{
     searchParams : {pageNumber : string}
@@ -17,7 +18,7 @@ const AdminArticlePage = async ({searchParams : {pageNumber}} : AdminArticleTabl
     const token = cookies().get("cookieToken")?.value || ""
     if(!token) redirect("/")
     const article: Article[] = await getArticles(pageNumber)
-    const count:number = await getArticlesCount()
+    const count:number = await prisma.article.count()
     const pages = Math.ceil(count/numberOfArticles)
     return (
         <section className='p-5'>
