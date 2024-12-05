@@ -6,6 +6,7 @@ import { resolve } from "dns/promises";
 import { Article } from "@prisma/client";
 import { getArticles,getArticlesCount } from "@/apiCalles/getArticlesApi";
 import { numberOfArticles } from "@/utils/constants";
+import prisma from "@/utils/db";
 
 interface pageNumber {
     searchParams: { pageNumber: string }
@@ -15,7 +16,7 @@ const Articlepage = async ({ searchParams }: pageNumber) => {
     const { pageNumber } = searchParams
     await new Promise((resolve) => setTimeout(resolve, 3000));
     const articles: Article[] = await getArticles(pageNumber);
-    const count:number = await getArticlesCount();
+    const count:number = await prisma.article.count()
     console.log(count)
     const pages = Math.ceil(count / numberOfArticles) 
     console.log("pages",pages)
