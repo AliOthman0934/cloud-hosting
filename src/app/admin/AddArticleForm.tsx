@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { text } from "stream/consumers";
+import { DOMAIN } from "@/utils/constants";
 
 const AddArticleForm = () => {
     const router = useRouter()
@@ -19,7 +20,7 @@ const AddArticleForm = () => {
             return toast.error("Description Is Required")
         }
         try {
-            await axios.post("http://localhost:3000/api/articles",{title,description})
+            await axios.post(`${DOMAIN}/api/articles`,{title,description})
             setTitle("")
             setDescription("")
             toast.success("New article has been added")

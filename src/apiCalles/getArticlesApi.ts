@@ -1,9 +1,10 @@
 import { typeSingleArticle } from "@/utils/types";
 import { Article } from "@prisma/client";
 import { promises } from "dns";
+import {DOMAIN} from "@/utils/constants"
 
 export async function getArticles(pageNumber: string | undefined): Promise<Article[]> {
-    const getArticles = await fetch(`http://localhost:3000/api/articles?pageNumber=${pageNumber}`,{cache : "no-store"});
+    const getArticles = await fetch(`${DOMAIN}/api/articles?pageNumber=${pageNumber}`,{cache : "no-store"});
 
     if (!getArticles.ok) {
         throw new Error("Somthing went wrong try agin")
@@ -13,7 +14,7 @@ export async function getArticles(pageNumber: string | undefined): Promise<Artic
 
 export async function getArticlesCount(): Promise<number> {
     try {
-        const response = await fetch(`http://localhost:3000/api/articles/count`,{cache : "no-store"});
+        const response = await fetch(`${DOMAIN}/api/articles/count`,{cache : "no-store"});
         
         if (!response.ok) {
             console.error("Failed to fetch articles count. Status:", response.status);
@@ -40,7 +41,7 @@ export async function getArticlesCount(): Promise<number> {
 }
 
 export async function getSearchedArticle(searchText: string): Promise<Article[]> {
-    const SearchedArticle = await fetch(`http://localhost:3000/api/articles/search?searchText=${searchText}`);
+    const SearchedArticle = await fetch(`${DOMAIN}/api/articles/search?searchText=${searchText}`);
 
     if (!SearchedArticle.ok) {
         throw new Error("Error Fetching Searched Article ")
@@ -50,7 +51,7 @@ export async function getSearchedArticle(searchText: string): Promise<Article[]>
 
 
 export async function getSingleArticle(articleId: string):Promise<typeSingleArticle>{
-    const response = await fetch(`http://localhost:3000/api/articles/${articleId}`,{cache:"no-store"})
+    const response = await fetch(`${DOMAIN}/api/articles/${articleId}`,{cache:"no-store"})
     if(!response.ok){
         throw new Error("Error fetching single article")
     }

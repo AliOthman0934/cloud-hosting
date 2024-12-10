@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"
 import axios from "axios"
 import { toast  } from "react-toastify"
 import { IoMdCloseCircleOutline } from "react-icons/io"
+import { DOMAIN } from "@/utils/constants"
 
 interface UpdateCommentModalProps{
     setOpen : Dispatch<SetStateAction<boolean>>
@@ -17,7 +18,7 @@ function UpdateCommentModal({setOpen,text,commentId}:UpdateCommentModalProps) {
         e.preventDefault()
         if(updateComment === "") toast.info("Please write somthing");
         try {
-            await axios.put(`http://localhost:3000/api/${commentId}`,{text :updateComment})
+            await axios.put(`${DOMAIN}/api/${commentId}`,{text :updateComment})
             router.refresh()
             setUpdateComment("")
             setOpen(false)

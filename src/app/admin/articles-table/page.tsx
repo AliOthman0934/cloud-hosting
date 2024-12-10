@@ -9,6 +9,7 @@ import { getArticles,getArticlesCount } from '@/apiCalles/getArticlesApi'
 import Pagination from '@/app/components/Article/pagination'
 import DeleteArticleButton from './DeleteArticleButton'
 import prisma from "@/utils/db";
+import { DOMAIN } from '@/utils/constants'
 
 interface AdminArticleTableProps{
     searchParams : {pageNumber : string}
@@ -42,7 +43,7 @@ const AdminArticlePage = async ({searchParams : {pageNumber}} : AdminArticleTabl
                                 <DeleteArticleButton articleId={article.id}/>
                             </td>
                             <td className='hidden lg:inline-block p-3'>
-                                <Link href={`http://localhost:3000/article/${article.id}`} className='text-white bg-blue-600 rounded-lg p-2 hover:bg-blue-800'>Read More</Link>
+                                <Link href={`${DOMAIN}/article/${article.id}`} className='text-white bg-blue-600 rounded-lg p-2 hover:bg-blue-800'>Read More</Link>
                             </td>
                         </tr>
                     ))}

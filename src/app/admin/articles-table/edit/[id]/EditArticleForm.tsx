@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { text } from "stream/consumers";
 import { Article } from "@prisma/client";
+import { DOMAIN } from "@/utils/constants";
 
 interface EditArticleFormProps {
     article : Article
@@ -24,7 +25,7 @@ const EditArticleForm = ({article} : EditArticleFormProps) => {
             return toast.error("Description Is Required")
         }
         try {
-            await axios.put(`http://localhost:3000/api/articles/${article.id}`,{title,description})
+            await axios.put(`${DOMAIN}/api/articles/${article.id}`,{title,description})
             toast.success("New article has been updated")
             router.refresh()
         } catch (error:any) {

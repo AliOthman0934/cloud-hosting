@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import axios from "axios"
 import { useRouter } from "next/navigation";
 import ButtenSpinner from "../components/ButtenSpinner";
+import { DOMAIN } from "@/utils/constants";
 
 const RegisterForm = () => {
     const [userName, setUserNmae] = useState("");
@@ -26,7 +27,7 @@ const RegisterForm = () => {
 
         try {
             setLoading(true)
-            await axios.post("http://localhost:3000/api/user/register",{email,password,userName})
+            await axios.post(`${DOMAIN}/api/user/register`,{email,password,userName})
             router.replace("/")
             router.refresh()
             setLoading(false)

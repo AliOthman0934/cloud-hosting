@@ -3,12 +3,13 @@ import axios from "axios"
 import { toast } from "react-toastify"
 import { useRouter } from "next/navigation";
 import styles from './Header.module.css';
+import { DOMAIN } from "@/utils/constants";
 
 function Logout() {
     const router = useRouter();
     const logOutHandler = async () => {
         try {
-            await axios.get("http://localhost:3000/api/user/logout")
+            await axios.get(`${DOMAIN}/api/user/logout`)
             router.push("/")
             router.refresh()
         } catch (error) {
