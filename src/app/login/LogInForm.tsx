@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import axios from "axios"
 import { boolean } from "zod";
 import ButtenSpinner from "../components/ButtenSpinner";
+import { DOMAIN } from "@/utils/constants";
 
 const LogInForm = () => {
     const router = useRouter();
@@ -23,7 +24,7 @@ const LogInForm = () => {
 
         try {
             setLoading(true)
-            await axios.post("http://localhost:3000/api/user/login", { password, email })
+            await axios.post(`${DOMAIN}/api/user/login`, { password, email })
             router.replace("./")
             router.refresh()
             setLoading(false)

@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { number } from "zod";
+import { DOMAIN } from "@/utils/constants";
 
 interface AddCommentFormProps{
     articleId : number
@@ -18,7 +19,7 @@ const AddCommentForm = ({articleId}: AddCommentFormProps) => {
             return toast.error("Please Add A Comment")
         }
         try {
-            await axios.post("http://localhost:3000/api/comments",{text,articleId})
+            await axios.post(`${DOMAIN}/api/comments`,{text,articleId})
             router.refresh()
             setText("")
         } catch (error:any) {

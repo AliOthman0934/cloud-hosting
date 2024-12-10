@@ -3,11 +3,12 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { comment } from '@prisma/client'
 import DeleteCommentButton from './DeleteCommentButton'
+import { DOMAIN } from '@/utils/constants'
 
 const AdminCommentPage = async () => {
     const token = cookies().get("cookieToken")?.value || ""
     if(!token) redirect("/")
-    const response = await fetch(`http://localhost:3000/api/comments`,{headers: {
+    const response = await fetch(`${DOMAIN}/api/comments`,{headers: {
         cookie:`cookieToken=${token}`,
     }})
     if(!response.ok){
