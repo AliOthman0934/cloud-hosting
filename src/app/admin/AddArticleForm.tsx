@@ -26,7 +26,7 @@ const AddArticleForm = () => {
             toast.success("New article has been added")
             router.refresh()
         } catch (error:any) {
-            toast.error(error?.response?.data.message);
+            error?.response?.data?.message || "Something went wrong. Please try again.";
             console.log(error);
         }
     }
