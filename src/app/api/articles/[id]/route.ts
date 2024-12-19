@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { updateArticle } from "@/utils/postType"
 import prisma from "@/utils/db";
+import { notFound, redirect } from "next/navigation";
 
 
 
@@ -36,6 +37,7 @@ export async function GET(request: NextRequest, { params }: articleId) {
     })
         if (!singleArticle) {
             return NextResponse.json({ message: "Article Not Found" }, { status: 404 })
+            redirect("/not-found")
         }
         return NextResponse.json(singleArticle , { status: 200 });
     } catch (error) {
