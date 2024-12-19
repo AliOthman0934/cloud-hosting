@@ -55,3 +55,29 @@ const AdminArticlePage = async ({searchParams : {pageNumber}} : AdminArticleTabl
 }
 
 export default AdminArticlePage
+
+
+// Querying the database directly in server-side functions in Next.js allows you to fetch data during the server-side rendering (SSR) process, ensuring that the data is ready before the page is sent to the client. This approach is beneficial for pages that need dynamic, frequently updated, or user-specific content.
+
+// How It Works:
+// Server-Side Functions in Next.js: Next.js provides two primary functions for fetching data on the server:
+
+// getServerSideProps: Runs at request time and fetches data for every request.
+// getStaticProps: Fetches data at build time (only for static generation).
+// Database Queries: In these server-side functions, you can directly use your database client (like Prisma, Sequelize, or Mongoose) to perform queries. Since these functions are executed on the server, they can securely interact with the database without exposing sensitive credentials to the client.
+
+// Steps to Query:
+
+// Import your database client or connection.
+// Write the query inside the server-side function.
+// Return the fetched data as props, which will be passed to the React component of the page.
+// The React component uses these props to render the content.
+// Advantages:
+
+// Fresh Data: For getServerSideProps, the database is queried for every request, ensuring users see the most up-to-date information.
+// Secure: Database credentials and sensitive logic remain on the server, not exposed to the client.
+// SEO-Friendly: Content fetched server-side is included in the HTML sent to the browser, which is beneficial for search engines.
+// When to Use:
+
+// When you need data that changes frequently or is user-specific (e.g., dashboards, personalized feeds).
+// When you want to ensure sensitive data fetching is done securely on the server.
